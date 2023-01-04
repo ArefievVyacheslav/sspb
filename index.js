@@ -4,7 +4,9 @@ const bodyParser = require('body-parser')
 const jwt = require('jsonwebtoken')
 const fs = require('fs')
 const path = require('path')
+const getShops = require('./utils/getShops')
 const getStatus = require('./utils/getStatus')
+const startParsing = require('./utils/startParsing')
 
 
 server.use(bodyParser.json(), cors())
@@ -31,6 +33,10 @@ server.put('/proxy', (req, res) => {
 server.get('/status', async (req, res) => {
   res.status(200).send(await getStatus())
 })
-
+server.post('/start_parser', async (req, res) => {
+  startParsing(req.body)
+  if (req.body.shop) res.status(200).send(`Парсинг магазина ${req.body.shop.toUpperCase()} запущен!`)
+  else res.status(200).send(`Парсинг ВСЕХ МАГАЗИНОВ запущен!`)
+})
 
 server.listen(3002, () => console.log('SERVER ON 3002'))
