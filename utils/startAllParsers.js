@@ -1,20 +1,23 @@
 const { PythonShell } = require('python-shell')
+const clearStatuses = require('./clearStatuses')
 const getShops = require('./getShops')
 const path = require('path')
 
-
-let iterableCount = 0
-
 async function pythonRecursiveParser () {
   const shops = await getShops()
-  if (iterableCount < shops.length) {
-    PythonShell.run(path.join(__dirname, `../../sspp/advcake/${ shops[ iterableCount ] }/START.py`), null, function (err) {
+  await clearStatuses()
+
+  for (const shop of shops) {
+    await PythonShell.run(path.join(__dirname, `../../sspp/advcake/${ shop }/START.py`), null, function (err) {
       if (err) throw err
-      iterableCount += 1
-      pythonRecursiveParser(shops.length)
-      console.log(iterableCount)
     })
   }
+
+  // shops.forEach(shop => {
+  //   PythonShell.run(path.join(__dirname, `../../sspp/advcake/${ shop }/START.py`), null, function (err) {
+  //     if (err) throw err
+  //   })
+  // })
 }
 
 module.exports = pythonRecursiveParser
