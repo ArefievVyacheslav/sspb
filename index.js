@@ -7,7 +7,7 @@ const path = require('path')
 const getStatus = require('./utils/getStatus')
 const getDeeplink = require('./utils/getDeeplink')
 const startParsing = require('./utils/startParsing')
-const getMatrixProduct = require('./utils/getMatrixProduct')
+const updateProducts = require('./utils/updateProducts')
 
 
 server.use(bodyParser.json(), cors())
@@ -33,15 +33,16 @@ server.put('/proxy', (req, res) => {
 })
 server.get('/status', async (req, res) => res.status(200).send(await getStatus()))
 server.post('/start_parser', async (req, res) => {
-  await startParsing(JSON.parse(req.body))
+  await startParsing(req.body)
   if (req.body.shop) res.status(200).send(`Парсинг магазина ${req.body.shop.toUpperCase()} запущен!`)
   else res.status(200).send(`Парсинг ВСЕХ МАГАЗИНОВ запущен!`)
 })
 server.post('/deeplink', async (req, res) => {
-  res.status(200).send(await getDeeplink(req.body.deeplink.replaceAll('"', ''), req.body.pp))
+  res.status(200).send(await getDeeplink(req.body.deeplink.replaceAll('"', ''), req.body.pp, req.body?.offerId))
 })
-server.post('/matrix', (req, res) => {
-  res.status(200).send(getMatrixProduct(req.body.oldProducts, req.body.newProducts))
+server.post('/update-products', async (req, res) => {
+  res.status(200).send(await updateProducts(req.body.shop))
 })
+
 
 server.listen(3002, () => console.log('SERVER ON 3002'))
