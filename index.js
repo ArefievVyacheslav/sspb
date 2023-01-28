@@ -45,4 +45,4 @@ server.post('/update-products', async (req, res) => {
 })
 
 
-server.listen(3002, () => console.log('SERVER ON 3002'))
+server.listen(3005, () => console.log('SERVER ON 3005'))

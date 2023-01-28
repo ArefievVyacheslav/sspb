@@ -11,7 +11,7 @@ function getMatrix (oldProducts, newProducts) {
         && oldProductObj.gender === newProductObj.gender
         && oldProductObj.oldprice === newProductObj.oldprice) {
         Object.keys(oldProductObj).forEach(key => {
-          if (newProductObj[key] && key !== 'id') oldProductObj[key] = newProductObj[key]
+          if (newProductObj[key] && key !== 'id' && key !== 'create') oldProductObj[key] = newProductObj[key]
         })
         products.push(oldProductObj)
         newProducts.splice(idxNew, 1)
@@ -19,7 +19,12 @@ function getMatrix (oldProducts, newProducts) {
     })
   })
   products.push(...newProducts)
-  return [...new Set(products)]
+  return [ ...new Set(products) ].map(productObj => {
+    if (!productObj.create) productObj.create = new Date().toLocaleString()
+    productObj.categoryT = productObj.category.toLowerCase()
+    productObj.subcategoryT = productObj.category.toLowerCase()
+    return productObj
+  })
 }
 
 
