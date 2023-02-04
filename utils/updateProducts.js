@@ -18,15 +18,9 @@ function getMatrix (oldProducts, newProducts) {
       }
     })
   })
-  products.push(...newProducts.map(productObj => {
-    delete productObj?.categoryT
-    delete productObj?.subcategoryT
-    return productObj
-  }))
+  products.push(...newProducts.map(productObj => productObj))
   return [ ...new Set(products) ].map(productObj => {
     if (!productObj.create) productObj.create = new Date().toLocaleString()
-    productObj.categoryT = productObj.category.toLowerCase()
-    productObj.subcategoryT = productObj.category.toLowerCase()
     return productObj
   })
 }
