@@ -48,9 +48,18 @@ module.exports = async shop => {
   await db.collection('clothes').deleteMany({ shop })
   await db.collection('shoes').deleteMany({ shop })
   await db.collection('accessories').deleteMany({ shop })
-  const clothes = products.filter(product => product.category === 'Одежда')
-  const shoes = products.filter(product => product.category === 'Обувь')
-  const accessories = products.filter(product => product.category === 'Аксессуары')
+  const clothes = products.filter(product => {
+    if (product && product.category) return product.category === 'Одежда'
+    else return false
+  })
+  const shoes = products.filter(product => {
+    if (product && product.category) return product.category === 'Обувь'
+    else return false
+  })
+  const accessories = products.filter(product => {
+    if (product && product.category) return product.category === 'Аксессуары'
+    else return false
+  })
   if (clothes.length) await db.collection('clothes').insertMany(clothes)
   if (shoes.length) await db.collection('shoes').insertMany(shoes)
   if (accessories.length) await db.collection('accessories').insertMany(accessories)
