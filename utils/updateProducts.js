@@ -6,7 +6,8 @@ function getMatrix (oldProducts, newProducts) {
   const products = []
   oldProducts.forEach(oldProductObj => {
     newProducts.forEach((newProductObj, idxNew) => {
-      if (oldProductObj.name === newProductObj.name
+      if (newProductObj
+        && oldProductObj.name === newProductObj.name
         && oldProductObj.color === newProductObj.color
         && oldProductObj.gender === newProductObj.gender
         && oldProductObj.oldprice === newProductObj.oldprice) {
