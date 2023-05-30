@@ -20,7 +20,7 @@ function getMatrix (oldProducts, newProducts) {
   })
   products.push(...newProducts.map(productObj => productObj))
   return [ ...new Set(products) ].map(productObj => {
-    if (!productObj.create) productObj.create = new Date().toLocaleString()
+    if (productObj && !productObj.create) productObj.create = new Date().toLocaleString()
     return productObj
   })
 }
