@@ -11,7 +11,7 @@ function getMatrix (oldProducts, newProducts) {
         && oldProductObj.gender === newProductObj.gender
         && oldProductObj.oldprice === newProductObj.oldprice) {
         Object.keys(oldProductObj).forEach(key => {
-          if (newProductObj[key] && key !== 'id' && key !== 'create') oldProductObj[key] = newProductObj[key]
+          if (newProductObj[key] && key !== 'id' && key !== 'create' && key !== 'like') oldProductObj[key] = newProductObj[key]
         })
         products.push(oldProductObj)
         newProducts.splice(idxNew, 1)
